@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>과자 몰래먹기 :: 2027 강차 시즌그리팅</title>
+    
+    <!-- 폰트 로드: Noto Serif KR (본명조), Cinzel (영문 타이틀)[cite: 3] -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- DSEG 공식 CDN 스타일시트 로드 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dseg@0.46.0/css/dseg.css">
+
+    <style>
+        /* DSEG7 슬림한 Regular 폰트 정의 */
+        @font-face {
+            font-family: 'DSEG7-Classic';
+            src: url('https://cdn.jsdelivr.net/npm/dseg@0.46.0/fonts/DSEG7-Classic/DSEG7Classic-Regular.woff2') format('woff2'),
+                 url('https://unpkg.com/dseg@0.46.0/fonts/DSEG7-Classic/DSEG7Classic-Regular.woff2') format('woff2'),
+                 url('https://cdn.jsdelivr.net/npm/dseg@0.46.0/fonts/DSEG7-Classic/DSEG7Classic-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* 🌟 모든 이미지의 기본 인라인 여백 및 틈새 제거 */
+        img {
+            display: block;
+            vertical-align: top;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #121212;
+            font-family: 'Noto Serif KR', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            /* 🌟 기본 커서 적용 */
+            cursor: url('cursor_default.png') 0 0, auto;
+        }
+
+        /* 🌟 1800x1080 고정 비율 래퍼 */
+        #game-wrapper {
+            position: relative;
+            width: 1800px;
+            height: 1080px;
+            flex-shrink: 0;
+            overflow: hidden;
+            background-color: #1a1918;
+            transform-origin: center center;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.7);
+            cursor: url('cursor_default.png') 0 0, auto;
+        }
+
+        /* 🌟 클릭 가능한 모든 요소에 손가락 커서 적용 */
+        button, 
+        a, 
+        .close-icon, 
+        .btn-main-dark, 
+        .btn-main-light,
+        .topbar-link,
+        #screen-game {
+            cursor: url('cursor_pointer.png') 4 0, pointer !important;
+        }
+
+        /* 텍스트 입력창은 텍스트 커서 유지 */
+        #input-id {
+            cursor: text !important;
+        }
+
+        /* 🌟 상단바 (높이 84px) */
+        #top-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 84px;
+            background-image: url('topbar_bg.png');
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 45px;
+            z-index: 100;
+        }
+
+        .topbar-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        #topbar-title-img {
+            height: 26px;
+            object-fit: contain;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        #topbar-x-img {
+            height: 27px;
+            object-fit: contain;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        /* 🌟 화면 공통 레이아웃 (1800 x 1080) */
+        .screen {
+            position: absolute;
+            top: 0px;
+            left: 0;
+            width: 1800px;
+            height: 1080px;
+            display: none;
+        }
+
+        /* =========================================
+           1. 대문 화면
+           ========================================= */
+        #screen-start {
+            display: flex;
+            background-image: url('main_bg.png');
+            background-size: cover;
+            background-position: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main-menu-box {
+            position: absolute;
+            bottom: 105px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .btn-main-dark {
+            width: 310px;
+            height: 74px;
+            background: linear-gradient(180deg, #33312e 0%, #1e1d1b 100%);
+            border: 3px solid #a68c6d;
+            border-radius: 12px;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+            transition: transform 0.05s ease;
+        }
+
+        .btn-main-light {
+            width: 310px;
+            height: 74px;
+            background: #ffffff;
+            border: 3px solid #b8a99a;
+            border-radius: 12px;
+            color: #2b2825;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            transition: transform 0.05s ease;
+        }
+
+        .btn-main-dark:active, .btn-main-light:active {
+            transform: scale(0.96);
+        }
+
+        .btn-main-dark .btn-text, .btn-main-light .btn-text {
+            font-size: 27px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-subtext {
+            font-size: 13px;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            margin-top: 2px;
+        }
+
+        /* 팝업 공통 */
+        .popup-overlay {
+            display: none;
+            position: absolute;
+            top: 72px;
+            left: 0;
+            width: 1800px;
+            height: 1080px;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            z-index: 120;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-card {
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+            border: 2px solid #d9d0c5;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 게임 설명 팝업 */
+        #popup-desc .popup-card {
+            width: 1150px;
+            padding: 60px 70px 50px 70px;
+        }
+
+        .popup-title {
+            font-size: 48px;
+            font-weight: 700;
+            color: #1f1e1c;
+            margin-bottom: 35px;
+        }
+
+        .desc-columns {
+            display: flex;
+            width: 100%;
+            gap: 60px;
+            text-align: left;
+            margin-bottom: 40px;
+        }
+
+        .desc-col {
+            flex: 1;
+        }
+
+        .col-header {
+            font-size: 28px;
+            font-weight: 700;
+            border-bottom: 2px solid #c4b5a5;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            color: #2b2724;
+            text-align: center;
+        }
+
+        .desc-list {
+            font-size: 19px;
+            line-height: 1.8;
+            color: #44403c;
+            margin: 0;
+            padding-left: 25px;
+        }
+
+        .desc-list li {
+            margin-bottom: 8px;
+        }
+
+        .desc-sub {
+            color: #78716c;
+            font-size: 17px;
+            list-style: none;
+            margin-left: -15px;
+        }
+
+        /* 아이디 입력 팝업 */
+        #popup-id .popup-card {
+            width: 870px;
+            padding: 65px 55px 50px 55px;
+        }
+
+        .input-box-wrapper {
+            width: 100%;
+            border: 3px solid #bda891;
+            padding: 15px 30px;
+            margin: 20px 0 35px 0;
+            background: #fdfdfd;
+        }
+
+        #input-id {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-family: 'Noto Serif KR', serif;
+            font-size: 38px;
+            text-align: center;
+            color: #242220;
+            background: transparent;
+        }
+
+        #id-warning {
+            color: #cc3333;
+            font-size: 20px;
+            margin-top: -20px;
+            margin-bottom: 20px;
+            visibility: hidden;
+        }
+
+        /* =========================================
+           2. 게임 화면
+           ========================================= */
+        #screen-game {
+            background-color: #d8cfc4;
+            position: relative;
+            touch-action: none;
+        }
+
+        #game-bg-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('game_bg.png');
+            background-size: cover;
+            background-position: center;
+            pointer-events: none;
+        }
+
+        /* 문 & 차주한 레이어 */
+        #door-layer {
+            position: absolute;
+            top: 30px;
+            left: 295px;
+            width: 360px;
+            height: 720px;
+            pointer-events: none;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: bottom center;
+        }
+
+        .door-closed { background-image: url('door_closed.png'); }
+        .juhan-open { background-image: url('juhan_open.png'); }
+        .juhan-scold { background-image: url('juhan_scold.png'); }
+
+        /* 강민재 레이어 */
+        #minjae-character {
+            position: absolute;
+            bottom: 0;
+            right: 240px;
+            width: 700px;
+            height: 700px;
+            pointer-events: none;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: bottom right;
+        }
+
+        .minjae-idle { background-image: url('minjae_idle.png'); }
+        .minjae-eat1 { background-image: url('minjae_eat1.png'); }
+        .minjae-eat2 { background-image: url('minjae_eat2.png'); }
+        .minjae-shock { background-image: url('minjae_shock.png'); }
+
+        /* 상단 스코어 보드 */
+        #score-board-box {
+            position: absolute;
+            top: 35px;
+            right: 320px;
+            background: #ffffff;
+            border-radius: 16px;
+            border: 3px solid #b8b1a8;
+            padding: 10px 45px 6px 45px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+        }
+
+        #score-board-box .score-label {
+            font-size: 17px;
+            color: #8c827a;
+            font-family: sans-serif;
+            font-weight: 600;
+        }
+
+        #score-display {
+            font-family: 'DSEG7-Classic', monospace;
+            font-weight: normal;
+            font-size: 60px;
+            color: #111111;
+            letter-spacing: 5px;
+            margin-top: 3px;
+        }
+
+        /* =========================================
+           3. 게임 오버 화면 (전체 1800 x 1080 커버)
+           ========================================= */
+        #screen-gameover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1800px;
+            height: 1080px;
+            background: linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.72)), url('juhan_closeup.png');
+            background-size: cover;
+            background-position: center;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 300;
+        }
+
+        #gameover-title {
+            font-family: 'Cinzel', serif;
+            font-size: 135px;
+            color: #ffffff;
+            font-weight: 700;
+            letter-spacing: 6px;
+            margin: 0;
+            text-shadow: 0 0 30px rgba(255,255,255,0.25);
+        }
+
+        #gameover-id {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 45px;
+            color: #ffffff;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        #gameover-score-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 55px;
+        }
+
+        #gameover-score-label {
+            font-size: 20px;
+            color: #999;
+            margin-bottom: 3px;
+        }
+
+        #gameover-score {
+            font-family: 'DSEG7-Classic', monospace;
+            font-weight: normal;
+            font-size: 82px;
+            color: #ffffff;
+            letter-spacing: 7px;
+        }
+
+        .gameover-btn-group {
+            display: flex;
+            gap: 35px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game-wrapper">
+        <!-- 상단바 -->
+        <div id="top-bar">
+            <a href="https://x.com/1201x0617_SG" target="_blank" rel="noopener noreferrer" class="topbar-link">
+                <img src="topbar_title.png" id="topbar-title-img" alt="정도 웰컴 키트 :: 2027 강차 시즌그리팅">
+            </a>
+            <a href="https://x.com/1201x0617_SG" target="_blank" rel="noopener noreferrer" class="topbar-link">
+                <img src="topbar_x.png" id="topbar-x-img" alt="X 로고">
+            </a>
+        </div>
+
+        <!-- 1. 대문 화면[cite: 3] -->
+        <div id="screen-start" class="screen">
+            <div class="main-menu-box">
+                <button id="btn-open-start-popup" class="btn-main-dark">
+                    <div class="btn-text">▶ 게임 시작</div>
+                    <div class="btn-subtext">GAME START</div>
+                </button>
+                <button id="btn-open-desc-popup" class="btn-main-light">
+                    <div class="btn-text">📖 게임 설명</div>
+                    <div class="btn-subtext">GAME DESCRIPTION</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- 1-1. 게임 설명 팝업[cite: 3] -->
+        <div id="popup-desc" class="popup-overlay">
+            <div class="popup-card">
+                <div class="popup-title">게임 설명</div>
+                <div class="desc-columns">
+                    <div class="desc-col">
+                        <div class="col-header">게임 방법</div>
+                        <ol class="desc-list">
+                            <li>게임 시작 버튼을 누르고, 아이디를 입력한 후 게임을 시작한다.[cite: 3]</li>
+                            <li>화면을 꾹 누르면 (마우스로 클릭하면) 강민재가 과자를 먹는다.<br><span class="desc-sub">* 과자를 먹는 동안 점수가 오른다.</span>[cite: 3]</li>
+                            <li>차주한이 랜덤하게 문을 열고 들어온다.<br>
+                                <span class="desc-sub">* 차주한이 들어올 때, 강민재가 과자를 먹고 있으면 게임 아웃!</span><br>
+                                <span class="desc-sub">* 과자를 들키지 않았다면, 차주한이 문을 닫고 나간다.</span>[cite: 3]
+                            </li>
+                            <li>차주한에게 들키기 전까지 게임을 진행한다.[cite: 3]</li>
+                        </ol>
+                    </div>
+                    <div class="desc-col">
+                        <div class="col-header">이벤트 참여방법</div>
+                        <ol class="desc-list">
+                            <li>게임 오버 화면의 점수와 아이디가 나오게 캡처한다.[cite: 3]</li>
+                            <li>해시태그와 함께 트위터에 게시글을 올린다.<br><span class="desc-sub">(공유하기 버튼을 누르면 바로 트위터로 이동!)</span>[cite: 3]</li>
+                            <li>구글 폼을 작성한다.[cite: 3]</li>
+                            <li>참여상 윗치폼을 작성하고 배송비를 입금한다.[cite: 3]</li>
+                            <li>순위 결과를 기다린다.[cite: 3]</li>
+                        </ol>
+                    </div>
+                </div>
+                <button id="btn-close-desc" class="btn-main-dark" style="width:230px; height:65px;">
+                    <div class="btn-text" style="font-size:24px;">닫기</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- 1-2. 아이디 입력 팝업[cite: 3] -->
+        <div id="popup-id" class="popup-overlay">
+            <div class="popup-card">
+                <div class="popup-title">아이디 입력</div>
+                <div class="input-box-wrapper">
+                    <input type="text" id="input-id" placeholder="@아이디" autocomplete="off" spellcheck="false">
+                </div>
+                <div id="id-warning">아이디를 입력해 주세요.</div>
+                <button id="btn-confirm-id" class="btn-main-dark">
+                    <div class="btn-text">▶ 게임 시작</div>
+                    <div class="btn-subtext">GAME START</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- 2. 게임 플레이 화면[cite: 3] -->
+        <div id="screen-game" class="screen">
+            <div id="game-bg-layer"></div>
+            
+            <div id="door-layer" class="door-closed"></div>
+            <div id="minjae-character" class="minjae-idle"></div>
+
+            <div id="score-board-box">
+                <div class="score-label">Score</div>
+                <div id="score-display">0</div>
+            </div>
+        </div>
+
+        <!-- 3. 게임 오버 화면 -->
+        <div id="screen-gameover">
+            <h1 id="gameover-title">GAME OVER</h1>
+            <div id="gameover-id">@아이디</div>
+            
+            <div id="gameover-score-wrap">
+                <span id="gameover-score-label">Score</span>
+                <span id="gameover-score">0</span>
+            </div>
+
+            <div class="gameover-btn-group">
+                <button id="btn-share" class="btn-main-dark">
+                    <div class="btn-text">𝕏 공유하기</div>
+                    <div class="btn-subtext">Share</div>
+                </button>
+                <button id="btn-restart" class="btn-main-dark">
+                    <div class="btn-text">↺ 처음으로</div>
+                    <div class="btn-subtext">GAME START</div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* 🌟 1800x1080 비율 자동 스케일 계산 */
+        function resizeGame() {
+            const wrapper = document.getElementById('game-wrapper');
+            const scale = Math.min(window.innerWidth / 1800, window.innerHeight / 1080);
+            wrapper.style.transform = `scale(${scale})`;
+        }
+        window.addEventListener('resize', resizeGame);
+        resizeGame();
+
+        /* 🌟 게임 내 모든 일러스트 사전 로딩 (첫 등장 시 깜빡임 방지) */
+        const preloadImageSources = [
+            'door_closed.png',
+            'juhan_open.png',
+            'juhan_scold.png',
+            'juhan_closeup.png',
+            'minjae_idle.png',
+            'minjae_eat1.png',
+            'minjae_eat2.png',
+            'minjae_shock.png'
+        ];
+
+        preloadImageSources.forEach((src) => {
+            const img = new Image();
+            img.src = src;
+        });
+
+        const screenStart = document.getElementById('screen-start');
+        const screenGame = document.getElementById('screen-game');
+        const screenGameOver = document.getElementById('screen-gameover');
+
+        const popupDesc = document.getElementById('popup-desc');
+        const popupId = document.getElementById('popup-id');
+        const inputId = document.getElementById('input-id');
+        const idWarning = document.getElementById('id-warning');
+
+        const doorLayer = document.getElementById('door-layer');
+        const minjaeChar = document.getElementById('minjae-character');
+        const scoreDisplay = document.getElementById('score-display');
+        const gameoverId = document.getElementById('gameover-id');
+        const gameoverScore = document.getElementById('gameover-score');
+
+        let userTwitterId = '';
+        let score = 0;
+        let isGameRunning = false;
+        let isEating = false;
+        
+        let scoreInterval = null;
+        let eatAnimInterval = null;
+        let bossCycleTimeout = null;
+
+        let doorState = 'closed';
+        let eatFrame = 1;
+
+        // 팝업 제어[cite: 3]
+        document.getElementById('btn-open-desc-popup').addEventListener('click', () => {
+            popupDesc.style.display = 'flex';
+        });
+        document.getElementById('btn-close-desc').addEventListener('click', () => {
+            popupDesc.style.display = 'none';
+        });
+
+        document.getElementById('btn-open-start-popup').addEventListener('click', () => {
+            popupId.style.display = 'flex';
+            inputId.focus();
+        });
+
+        inputId.addEventListener('input', (e) => {
+            let val = e.target.value.replace(/[^@a-zA-Z0-9_]/g, '');
+            let atCount = 0;
+            val = val.replace(/@/g, () => (++atCount === 1 ? '@' : ''));
+            if (val.length > 20) val = val.slice(0, 20);
+            e.target.value = val;
+            if (val.length > 0) idWarning.style.visibility = 'hidden';
+        });
+
+        document.getElementById('btn-confirm-id').addEventListener('click', () => {
+            userTwitterId = inputId.value.trim();
+            const rawId = userTwitterId.replace(/^@/, '');
+
+            if (userTwitterId === "") {
+                idWarning.textContent = "아이디를 입력해 주세요.";
+                idWarning.style.visibility = 'visible';
+                inputId.focus();
+                return;
+            }
+
+            if (!userTwitterId.startsWith('@')) {
+                idWarning.textContent = "아이디는 '@아이디'형태로 입력해 주세요.";
+                idWarning.style.visibility = 'visible';
+                inputId.focus();
+                return;
+            }
+
+            if (rawId.length < 3) {
+                idWarning.textContent = "아이디를 입력해 주세요.";
+                idWarning.style.visibility = 'visible';
+                inputId.focus();
+                return;
+            }
+
+            popupId.style.display = 'none';
+            screenStart.style.display = 'none';
+            screenGame.style.display = 'block';
+
+            startGame();
+        });
+
+        inputId.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') document.getElementById('btn-confirm-id').click();
+        });
+
+        /* 과자 먹기 모션 */
+        function startEating(e) {
+            if (!isGameRunning || isEating) return;
+            if (e) e.preventDefault();
+            
+            isEating = true;
+
+            if (doorState === 'open') {
+                triggerCaughtGameOver();
+                return;
+            }
+
+            eatFrame = 1;
+            minjaeChar.className = 'minjae-eat1';
+
+            eatAnimInterval = setInterval(() => {
+                eatFrame = (eatFrame === 1) ? 2 : 1;
+                minjaeChar.className = (eatFrame === 1) ? 'minjae-eat1' : 'minjae-eat2';
+            }, 160);
+        }
+
+        function stopEating(e) {
+            if (!isGameRunning || !isEating) return;
+            if (e) e.preventDefault();
+
+            isEating = false;
+            clearInterval(eatAnimInterval);
+            minjaeChar.className = 'minjae-idle';
+        }
+
+        screenGame.addEventListener('pointerdown', startEating);
+        window.addEventListener('pointerup', stopEating);
+        window.addEventListener('pointercancel', stopEating);
+
+        /* 게임 진행 및 차주한 등장 패턴 */
+        function startGame() {
+            isGameRunning = true;
+            isEating = false;
+            score = 0;
+            doorState = 'closed';
+            
+            doorLayer.className = 'door-closed';
+            minjaeChar.className = 'minjae-idle';
+            scoreDisplay.textContent = '0';
+
+            scoreInterval = setInterval(() => {
+                if (isEating && isGameRunning) {
+                    score += 1;
+                    scoreDisplay.textContent = score;
+                }
+            }, 50);
+
+            scheduleNextBossVisit();
+        }
+
+        function scheduleNextBossVisit() {
+            if (!isGameRunning) return;
+
+            const waitTime = Math.random() * 2300 + 2200;
+
+            bossCycleTimeout = setTimeout(() => {
+                if (!isGameRunning) return;
+
+                doorState = 'open';
+                doorLayer.className = 'juhan-open';
+
+                if (isEating) {
+                    triggerCaughtGameOver();
+                    return;
+                }
+
+                const stayDuration = Math.random() * 600 + 1200;
+                bossCycleTimeout = setTimeout(() => {
+                    if (!isGameRunning) return;
+
+                    doorState = 'closed';
+                    doorLayer.className = 'door-closed';
+
+                    scheduleNextBossVisit();
+                }, stayDuration);
+
+            }, waitTime);
+        }
+
+        /* 검거 및 게임오버 전환 */
+        function triggerCaughtGameOver() {
+            isGameRunning = false;
+            clearInterval(scoreInterval);
+            clearInterval(eatAnimInterval);
+            clearTimeout(bossCycleTimeout);
+
+            minjaeChar.className = 'minjae-shock';
+            doorLayer.className = 'juhan-scold';
+
+            setTimeout(() => {
+                gameoverId.textContent = userTwitterId;
+                gameoverScore.textContent = score;
+                screenGameOver.style.display = 'flex';
+            }, 1000);
+        }
+
+        // 트위터 공유[cite: 3]
+        document.getElementById('btn-share').addEventListener('click', () => {
+            const shareText = `정도 웰컴 키트 :: 2027 강차 시즌그리팅\n과자 몰래먹기에서 ${score}점을 획득했습니다!\n아이디: ${userTwitterId}\n\n#정도_웰컴_키트 #2027_강차_시즌그리팅 #과자몰래먹기\n`;
+            const currentUrl = window.location.origin + window.location.pathname + '?v=1';
+            const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(currentUrl)}`;
+            window.open(twitterUrl, '_blank');
+        });
+
+        document.getElementById('btn-restart').addEventListener('click', () => {
+            location.reload();
+        });
+    </script>
+</body>
+</html>
