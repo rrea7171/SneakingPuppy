@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>과자 몰래먹기 :: 2027 강차 시즌그리팅</title>
     
+    <!-- 🌟 Open Graph (카카오톡, 페이스북, 디스코드 링크 미리보기) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="과자 몰래먹기 :: 2027 강차 시즌그리팅">
+    <meta property="og:description" content="변호사님 모르게 과자를 먹어보자!">
+    <meta property="og:image" content="preview.png">
+
+    <!-- 🌟 Twitter Card (트위터 링크 미리보기) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="과자 몰래먹기 :: 2027 강차 시즌그리팅">
+    <meta name="twitter:description" content="변호사님 모르게 과자를 먹어보자!">
+    <meta name="twitter:image" content="preview.png">
+
     <!-- 폰트 로드: Noto Serif KR (본명조), Cinzel (영문 타이틀)[cite: 3] -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -266,7 +278,6 @@
            2. 게임 화면
            ========================================= */
         #screen-game {
-            /* 🌟 게임 영역 밖 배경색 지정 */
             background-color: #dcd0be;
             position: relative;
             touch-action: none;
@@ -432,7 +443,7 @@
             align-items: center;
             justify-content: center;
             opacity: 0;
-            transition: opacity 0.8s ease-in-out;
+            transition: opacity 0.5s ease-in-out; /* 🌟 페이드인 속도를 기존보다 빠르게 최적화 */
             pointer-events: none;
         }
 
@@ -487,7 +498,7 @@
             align-items: center;
         }
 
-        /* 🌟 이미지 깜빡임 방지용 비가시 렌더 컨테이너 */
+        /* 이미지 깜빡임 방지용 비가시 렌더 컨테이너 */
         #preload-cache-box {
             position: absolute;
             top: 0;
@@ -579,7 +590,7 @@
             </div>
         </div>
 
-        <!-- 🌟 브라우저 메모리에 미리 렌더링해두는 히든 박스 (깜빡임 원천 차단) -->
+        <!-- 브라우저 메모리 프리렌더링 히든 박스 -->
         <div id="preload-cache-box">
             <div class="door-open"></div>
             <div class="juhan-open"></div>
@@ -601,8 +612,9 @@
         window.addEventListener('resize', resizeGame);
         resizeGame();
 
-        /* 🌟 고속 비동기 디코딩(GPU 메모리 로드) 적용 */
+        /* 고속 비동기 디코딩 적용 */
         const preloadImageSources = [
+            'preview.png',
             'topbar_bg.png',
             'main_bg.png',
             'btn_start.png',
@@ -826,7 +838,7 @@
             }, waitTime);
         }
 
-        /* 검거 및 게임오버 순차 전환 */
+        /* 🌟 검거 및 게임오버 전환 (얼빡 노출 후 0.4초 뒤 UI 페이드인) */
         function triggerCaughtGameOver() {
             isGameRunning = false;
             clearInterval(scoreInterval);
@@ -836,6 +848,7 @@
             minjaeChar.className = 'minjae-shock';
             juhanChar.className = 'juhan-scold';
 
+            // 1초간 혼나는 모션 후 얼빡 화면 표시
             setTimeout(() => {
                 gameoverId.textContent = userTwitterId;
                 gameoverScore.textContent = score;
@@ -843,15 +856,16 @@
                 gameoverContent.classList.remove('show');
                 screenGameOver.style.display = 'block';
 
+                // 🌟 얼빡 노출 후 대기 시간을 0.4초(400ms)로 단축하여 빠르게 전환
                 setTimeout(() => {
                     gameoverContent.classList.add('show');
-                }, 1000);
+                }, 400);
             }, 1000);
         }
 
-        // 트위터 공유 로직[cite: 7]
+        /* 🌟 트위터 공유 (요청된 3줄 규격 적용) */
         document.getElementById('btn-share').addEventListener('click', () => {
-            const shareText = `정도 웰컴 키트 :: 2027 강차 시즌그리팅\n과자 몰래먹기에서 ${score}점을 획득했습니다!\n아이디: ${userTwitterId}\n\n#정도_웰컴_키트 #2027_강차_시즌그리팅 #과자몰래먹기\n`;
+            const shareText = `#방금바삭소리누굽니까_저는아니에요\n#바삭강민재_빠직차주한\n`;
             const currentUrl = window.location.origin + window.location.pathname + '?v=1';
             const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(currentUrl)}`;
             window.open(twitterUrl, '_blank');
