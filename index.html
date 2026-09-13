@@ -76,16 +76,12 @@
             cursor: url('cursor_pointer.png') 4 0, pointer !important;
         }
 
-        /* 🌟 이미지 버튼 공통 효과 (클릭 시 쫀득한 눌림 효과) */
+        /* 🌟 이미지 버튼 공통 효과 (클릭 시 쫀득한 눌림 효과)[cite: 7] */
         .img-btn {
             user-select: none;
             -webkit-user-drag: none;
             transition: transform 0.08s ease;
-            filter: drop-shadow(0px 3px 5px rgba(0, 0, 0, 0.5)); /* 🌟 이미지 외곽선을 따라가는 그림자 추가 */
-            /* 0px: 그림자의 가로 위치 (양수면 오른쪽, 음수면 왼쪽)
-            3px: 그림자의 세로 위치 (양수면 아래, 음수면 위)
-            5px: 그림자의 번짐 정도 (숫자가 클수록 부드럽게 퍼짐)
-            0.5: 그림자의 진하기 (0.1 ~ 1.0 사이, 높을수록 진해짐) */
+            filter: drop-shadow(0px 3px 5px rgba(0, 0, 0, 0.5));
         }
 
         .img-btn:active {
@@ -155,10 +151,9 @@
             align-items: center;
         }
 
-        /* 🌟 이미지 버튼 배치 박스 */
         .main-menu-box {
             position: absolute;
-            bottom: 160px; /* 포토샵 시안 종이 하단 위치에 맞춤 */
+            bottom: 160px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
@@ -184,7 +179,7 @@
             align-items: center;
         }
 
-        /* 🌟 1-1. 게임 설명 팝업 (이미지 전용 컨테이너) */
+        /* 1-1. 게임 설명 팝업[cite: 6] */
         #popup-desc-container {
             position: relative;
             display: inline-flex;
@@ -201,7 +196,6 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.35);
         }
 
-        /* 게임 설명 닫기 버튼 위치 (이미지 하단 중앙) */
         #btn-close-desc {
             position: absolute;
             bottom: 45px;
@@ -213,12 +207,12 @@
             transform: translateX(-50%) scale(0.96);
         }
 
-        /* 🌟 아이디 입력 팝업 박스 (이미지 배경 적용) */
+        /* 1-2. 아이디 입력 팝업 박스[cite: 6] */
         #popup-id-card {
             position: relative;
             width: 900px;
             height: auto;
-            background-image: url('id_popup_box.png'); /* 아이디 입력창 박스 이미지 */
+            background-image: url('id_popup_box.png');
             background-size: 100% 100%;
             background-repeat: no-repeat;
             display: flex;
@@ -228,25 +222,22 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.35);
         }
 
-        /* 1. 타이틀 이미지 크기 */
         #id-title-img {
             max-width: 260px;
             height: auto;
             margin-bottom: 15px;
         }
 
-        /* 2. 안내 문구 이미지 크기 */
         #id-instruction-img {
             max-width: 600px;
             height: auto;
             margin-bottom: 25px;
         }
 
-        /* 3. 아이디 입력창 테두리 박스 (가운데 정렬) */
         .input-box-wrapper {
             width: 680px;
             border: 3px solid #b59b71;
-            border-radius: 0px; /* 박스 라운드 */
+            border-radius: 0px;
             padding: 12px 25px;
             margin-bottom: 18px;
             background: #ffffff;
@@ -263,90 +254,94 @@
             background: transparent;
         }
 
-        /* 4. 경고 문구 이미지 (공간을 유지한 채 숨겨둠) */
         #id-warning-img {
-            height: 24px; /* 경고 이미지 높이에 맞게 조절 */
+            height: 24px;
             object-fit: contain;
             margin-top: 7px;
             margin-bottom: 18px;
-            visibility: hidden; /* 오류 전에는 공간만 차지하고 보이지 않음 */
-        }
-
-        .btn-main-dark {
-            width: 310px;
-            height: 74px;
-            background: linear-gradient(180deg, #33312e 0%, #1e1d1b 100%);
-            border: 3px solid #a68c6d;
-            border-radius: 12px;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-            transition: transform 0.05s ease;
-        }
-
-        .btn-main-dark:active {
-            transform: scale(0.96);
-        }
-
-        .btn-main-dark .btn-text {
-            font-size: 27px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .btn-subtext {
-            font-size: 13px;
-            letter-spacing: 1px;
-            opacity: 0.8;
-            margin-top: 2px;
+            visibility: hidden;
         }
 
         /* =========================================
-           2. 게임 화면[cite: 5]
+           2. 게임 화면
            ========================================= */
         #screen-game {
-            background-color: #d8cfc4;
+            /* 🌟 게임 영역 밖 배경색 지정 */
+            background-color: #dcd0be;
             position: relative;
             touch-action: none;
         }
 
-        #game-bg-layer {
+        #game-play-area {
             position: absolute;
-            width: 100%;
-            height: 100%;
+            width: 1288px;
+            height: 966px;
+            top: 99px;
+            left: 50%;
+            transform: translateX(-50%);
             background-image: url('game_bg.png');
-            background-size: cover;
-            background-position: center;
-            pointer-events: none;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            overflow: hidden;
         }
 
+        /* 문 레이어[cite: 6] */
         #door-layer {
             position: absolute;
-            top: 30px;
-            left: 295px;
-            width: 360px;
-            height: 720px;
+            top: 0;
+            left: 84px;
             pointer-events: none;
             background-size: contain;
             background-repeat: no-repeat;
-            background-position: bottom center;
+            background-position: top left;
         }
 
-        .door-closed { background-image: url('door_closed.png'); }
-        .juhan-open { background-image: url('juhan_open.png'); }
-        .juhan-scold { background-image: url('juhan_scold.png'); }
+        .door-closed { 
+            background-image: url('door_closed.png'); 
+            width: 394px;
+            height: 568px;
+        }
 
+        .door-open { 
+            background-image: url('door_open.png'); 
+            width: 203px;
+            height: 668px;
+        }
+
+        /* 차주한 레이어[cite: 6] */
+        #juhan-character {
+            position: absolute;
+            pointer-events: none;
+            background-size: contain;
+            background-repeat: no-repeat;
+            display: none;
+        }
+
+        .juhan-open { 
+            display: block !important;
+            background-image: url('juhan_open.png'); 
+            left: 283px;
+            top: 56px;
+            width: 224px;
+            height: 409px;
+        }
+
+        .juhan-scold { 
+            display: block !important;
+            background-image: url('juhan_scold.png'); 
+            left: 287px;
+            top: 7px;
+            width: 540px;
+            height: 639px;
+        }
+
+        /* 강민재 레이어[cite: 6] */
         #minjae-character {
             position: absolute;
             bottom: 0;
-            right: 240px;
+            right: 0;
             width: 700px;
-            height: 700px;
+            height: 767px;
             pointer-events: none;
             background-size: contain;
             background-repeat: no-repeat;
@@ -358,39 +353,62 @@
         .minjae-eat2 { background-image: url('minjae_eat2.png'); }
         .minjae-shock { background-image: url('minjae_shock.png'); }
 
-        #score-board-box {
+        /* 탁자 위 과자[cite: 6] */
+        #snack-on-table {
             position: absolute;
-            top: 35px;
-            right: 320px;
-            background: #ffffff;
-            border-radius: 16px;
-            border: 3px solid #b8b1a8;
-            padding: 10px 45px 6px 45px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 10;
+            top: 631px;
+            left: 639px;
+            width: 333px;
+            height: 226px;
+            pointer-events: none;
+            background-image: url('snack.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: bottom right;
+            display: none;
         }
 
-        #score-board-box .score-label {
-            font-size: 17px;
-            color: #8c827a;
-            font-family: sans-serif;
-            font-weight: 600;
+        /* 상단 스코어 보드[cite: 7] */
+        #score-board-box {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 328px;
+            height: 100px;
+            background-image: url('score_bg.png');
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
+        }
+
+        #score-label-img {
+            height: 18px;
+            object-fit: contain;
+            margin-top: 4px;
+            margin-bottom: 8px;
+            user-select: none;
+            -webkit-user-drag: none;
         }
 
         #score-display {
             font-family: 'DSEG7-Classic', monospace;
             font-weight: normal;
-            font-size: 60px;
+            font-size: 50px;
             color: #111111;
-            letter-spacing: 5px;
-            margin-top: 3px;
+            letter-spacing: 4px;
+            text-indent: 4px;
+            text-align: center;
+            width: 100%;
+            line-height: 1;
         }
 
         /* =========================================
-           3. 게임 오버 화면[cite: 5]
+           3. 게임 오버 화면[cite: 7]
            ========================================= */
         #screen-gameover {
             position: absolute;
@@ -398,45 +416,60 @@
             left: 0;
             width: 1800px;
             height: 1080px;
-            background: linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.72)), url('juhan_closeup.png');
+            background-image: url('juhan_closeup.png');
             background-size: cover;
             background-position: center;
             display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
             z-index: 300;
         }
 
-        #gameover-title {
-            font-family: 'Cinzel', serif;
-            font-size: 135px;
-            color: #ffffff;
-            font-weight: 700;
-            letter-spacing: 6px;
-            margin: 0;
-            text-shadow: 0 0 30px rgba(255,255,255,0.25);
+        #gameover-content {
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.72);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            pointer-events: none;
+        }
+
+        #gameover-content.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #gameover-title-img {
+            max-width: 1237px;
+            height: auto;
+            user-select: none;
+            -webkit-user-drag: none;
+            margin-bottom: 100px;
         }
 
         #gameover-id {
             font-family: 'Noto Serif KR', serif;
             font-size: 45px;
             color: #ffffff;
-            margin-top: 20px;
-            margin-bottom: 15px;
+            margin-top: 0;
+            margin-bottom: 37px;
         }
 
         #gameover-score-wrap {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 55px;
+            margin-bottom: 92px;
         }
 
-        #gameover-score-label {
-            font-size: 20px;
-            color: #999;
-            margin-bottom: 3px;
+        #gameover-score-label-img {
+            height: 24px;
+            object-fit: contain;
+            margin-bottom: 12px;
+            user-select: none;
+            -webkit-user-drag: none;
         }
 
         #gameover-score {
@@ -445,18 +478,33 @@
             font-size: 82px;
             color: #ffffff;
             letter-spacing: 7px;
+            text-indent: 7px;
         }
 
         .gameover-btn-group {
             display: flex;
-            gap: 35px;
+            gap: 64px;
+            align-items: center;
+        }
+
+        /* 🌟 이미지 깜빡임 방지용 비가시 렌더 컨테이너 */
+        #preload-cache-box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1px;
+            height: 1px;
+            opacity: 0.01;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -9999;
         }
     </style>
 </head>
 <body>
 
     <div id="game-wrapper">
-        <!-- 상단바[cite: 5] -->
+        <!-- 상단바[cite: 6] -->
         <div id="top-bar">
             <a href="https://x.com/1201x0617_SG" target="_blank" rel="noopener noreferrer" class="topbar-link">
                 <img src="topbar_title.png" id="topbar-title-img" alt="정도 웰컴 키트 :: 2027 강차 시즌그리팅">
@@ -466,7 +514,7 @@
             </a>
         </div>
 
-        <!-- 1. 대문 화면 (이미지 버튼 2개 적용) -->
+        <!-- 1. 대문 화면[cite: 6] -->
         <div id="screen-start" class="screen">
             <div class="main-menu-box">
                 <img src="btn_start.png" id="btn-open-start-popup" class="img-btn" alt="게임 시작">
@@ -474,7 +522,7 @@
             </div>
         </div>
 
-        <!-- 1-1. 게임 설명 팝업 (이미지 및 닫기 버튼 이미지 적용) -->
+        <!-- 1-1. 게임 설명 팝업[cite: 6] -->
         <div id="popup-desc" class="popup-overlay">
             <div id="popup-desc-container">
                 <img src="desc_popup.png" id="desc-popup-img" alt="게임 설명">
@@ -482,66 +530,69 @@
             </div>
         </div>
 
-        <!-- 1-2. 아이디 입력 팝업 -->
+        <!-- 1-2. 아이디 입력 팝업[cite: 6] -->
         <div id="popup-id" class="popup-overlay">
             <div class="popup-card" id="popup-id-card">
-                <!-- 1. '아이디 입력' 타이틀 이미지 -->
                 <img src="id_title.png" id="id-title-img" alt="아이디 입력">
-
-                <!-- 2. 안내 문구 이미지 -->
                 <img src="id_instruction.png" id="id-instruction-img" alt="트위터 아이디 안내 문구">
 
-                <!-- 3. 실제 타이핑하는 아이디 입력칸 -->
                 <div class="input-box-wrapper">
                     <input type="text" id="input-id" placeholder="@아이디" autocomplete="off" spellcheck="false">
                 </div>
 
-                <!-- 4. 경고 문구 이미지 (경고1, 경고2가 상황에 맞춰 교체됨) -->
                 <img src="id_warn_empty.png" id="id-warning-img" alt="경고 문구">
-
-                <!-- 5. 게임 시작 버튼 이미지 (대문과 동일) -->
                 <img src="btn_start.png" id="btn-confirm-id" class="img-btn" alt="게임 시작">
             </div>
         </div>
 
-        <!-- 2. 게임 플레이 화면[cite: 5] -->
+        <!-- 2. 게임 플레이 화면 -->
         <div id="screen-game" class="screen">
-            <div id="game-bg-layer"></div>
-            
-            <div id="door-layer" class="door-closed"></div>
-            <div id="minjae-character" class="minjae-idle"></div>
+            <div id="game-play-area">
+                <div id="door-layer" class="door-closed"></div>
+                <div id="juhan-character"></div>
 
-            <div id="score-board-box">
-                <div class="score-label">Score</div>
-                <div id="score-display">0</div>
+                <div id="snack-on-table"></div>
+                <div id="minjae-character" class="minjae-idle"></div>
+
+                <div id="score-board-box">
+                    <img src="score_label.png" id="score-label-img" alt="SCORE">
+                    <div id="score-display">0</div>
+                </div>
             </div>
         </div>
 
-        <!-- 3. 게임 오버 화면[cite: 5] -->
+        <!-- 3. 게임 오버 화면[cite: 7] -->
         <div id="screen-gameover">
-            <h1 id="gameover-title">GAME OVER</h1>
-            <div id="gameover-id">@아이디</div>
-            
-            <div id="gameover-score-wrap">
-                <span id="gameover-score-label">Score</span>
-                <span id="gameover-score">0</span>
-            </div>
+            <div id="gameover-content">
+                <img src="gameover_title.png" id="gameover-title-img" alt="GAME OVER">
+                <div id="gameover-id">@아이디</div>
+                
+                <div id="gameover-score-wrap">
+                    <img src="gameover_score_label.png" id="gameover-score-label-img" alt="SCORE">
+                    <span id="gameover-score">0</span>
+                </div>
 
-            <div class="gameover-btn-group">
-                <button id="btn-share" class="btn-main-dark">
-                    <div class="btn-text">𝕏 공유하기</div>
-                    <div class="btn-subtext">Share</div>
-                </button>
-                <button id="btn-restart" class="btn-main-dark">
-                    <div class="btn-text">↺ 처음으로</div>
-                    <div class="btn-subtext">GAME START</div>
-                </button>
+                <div class="gameover-btn-group">
+                    <img src="btn_share.png" id="btn-share" class="img-btn" alt="공유하기">
+                    <img src="btn_restart.png" id="btn-restart" class="img-btn" alt="처음으로">
+                </div>
             </div>
+        </div>
+
+        <!-- 🌟 브라우저 메모리에 미리 렌더링해두는 히든 박스 (깜빡임 원천 차단) -->
+        <div id="preload-cache-box">
+            <div class="door-open"></div>
+            <div class="juhan-open"></div>
+            <div class="juhan-scold"></div>
+            <div class="minjae-eat1"></div>
+            <div class="minjae-eat2"></div>
+            <div class="minjae-shock"></div>
+            <div style="background-image: url('snack.png');"></div>
+            <div style="background-image: url('juhan_closeup.png');"></div>
         </div>
     </div>
 
     <script>
-        /* 1800x1080 비율 자동 스케일[cite: 5] */
         function resizeGame() {
             const wrapper = document.getElementById('game-wrapper');
             const scale = Math.min(window.innerWidth / 1800, window.innerHeight / 1080);
@@ -550,8 +601,10 @@
         window.addEventListener('resize', resizeGame);
         resizeGame();
 
-        /* 🌟 전체 이미지 사전 로딩 (버튼 및 설명 팝업 포함) */
+        /* 🌟 고속 비동기 디코딩(GPU 메모리 로드) 적용 */
         const preloadImageSources = [
+            'topbar_bg.png',
+            'main_bg.png',
             'btn_start.png',
             'btn_desc.png',
             'desc_popup.png',
@@ -561,85 +614,50 @@
             'id_instruction.png',
             'id_warn_empty.png',
             'id_warn_format.png',
+            'game_bg.png',
             'door_closed.png',
+            'door_open.png',
             'juhan_open.png',
             'juhan_scold.png',
             'juhan_closeup.png',
             'minjae_idle.png',
             'minjae_eat1.png',
             'minjae_eat2.png',
-            'minjae_shock.png'
+            'minjae_shock.png',
+            'snack.png',
+            'score_bg.png',
+            'score_label.png',
+            'gameover_title.png',
+            'gameover_score_label.png',
+            'btn_share.png',
+            'btn_restart.png'
         ];
 
         preloadImageSources.forEach((src) => {
             const img = new Image();
             img.src = src;
+            if (img.decode) {
+                img.decode().catch(() => {});
+            }
         });
 
         const screenStart = document.getElementById('screen-start');
         const screenGame = document.getElementById('screen-game');
         const screenGameOver = document.getElementById('screen-gameover');
+        const gameoverContent = document.getElementById('gameover-content');
 
         const popupDesc = document.getElementById('popup-desc');
         const popupId = document.getElementById('popup-id');
         const inputId = document.getElementById('input-id');
         
-        // 🌟 경고 이미지 요소 선택
         const idWarningImg = document.getElementById('id-warning-img');
 
-        // 실시간 입력 시 경고 숨김
-        inputId.addEventListener('input', (e) => {
-            let val = e.target.value.replace(/[^@a-zA-Z0-9_]/g, '');
-            let atCount = 0;
-            val = val.replace(/@/g, () => (++atCount === 1 ? '@' : ''));
-            if (val.length > 20) val = val.slice(0, 20);
-            e.target.value = val;
-            
-            if (val.length > 0) {
-                idWarningImg.style.visibility = 'hidden';
-            }
-        });
-
-        // '게임 시작' 버튼 클릭 검증 로직
-        document.getElementById('btn-confirm-id').addEventListener('click', () => {
-            userTwitterId = inputId.value.trim();
-            const rawId = userTwitterId.replace(/^@/, '');
-
-            // 🚨 1. 빈칸인 경우 -> 경고문구 1 표시
-            if (userTwitterId === "") {
-                idWarningImg.src = 'id_warn_empty.png';
-                idWarningImg.style.visibility = 'visible';
-                inputId.focus();
-                return;
-            }
-
-            // 🚨 2. @로 시작하지 않는 경우 -> 경고문구 2 표시
-            if (!userTwitterId.startsWith('@')) {
-                idWarningImg.src = 'id_warn_format.png';
-                idWarningImg.style.visibility = 'visible';
-                inputId.focus();
-                return;
-            }
-
-            // 🚨 3. @만 있거나 아이디가 3글자 미만인 경우 -> 경고문구 1 표시
-            if (rawId.length < 3) {
-                idWarningImg.src = 'id_warn_empty.png';
-                idWarningImg.style.visibility = 'visible';
-                inputId.focus();
-                return;
-            }
-
-            // 정상 통과 시 게임 화면 진입
-            popupId.style.display = 'none';
-            screenStart.style.display = 'none';
-            screenGame.style.display = 'block';
-
-            startGame();
-        });
-
         const doorLayer = document.getElementById('door-layer');
+        const juhanChar = document.getElementById('juhan-character');
         const minjaeChar = document.getElementById('minjae-character');
+        const snackImg = document.getElementById('snack-on-table');
         const scoreDisplay = document.getElementById('score-display');
+        
         const gameoverId = document.getElementById('gameover-id');
         const gameoverScore = document.getElementById('gameover-score');
 
@@ -655,7 +673,7 @@
         let doorState = 'closed';
         let eatFrame = 1;
 
-        // 설명 팝업 열기 / 닫기
+        // 팝업 제어
         document.getElementById('btn-open-desc-popup').addEventListener('click', () => {
             popupDesc.style.display = 'flex';
         });
@@ -663,7 +681,6 @@
             popupDesc.style.display = 'none';
         });
 
-        // 아이디 팝업 열기[cite: 5]
         document.getElementById('btn-open-start-popup').addEventListener('click', () => {
             popupId.style.display = 'flex';
             inputId.focus();
@@ -675,7 +692,10 @@
             val = val.replace(/@/g, () => (++atCount === 1 ? '@' : ''));
             if (val.length > 20) val = val.slice(0, 20);
             e.target.value = val;
-            if (val.length > 0) idWarning.style.visibility = 'hidden';
+            
+            if (val.length > 0) {
+                idWarningImg.style.visibility = 'hidden';
+            }
         });
 
         document.getElementById('btn-confirm-id').addEventListener('click', () => {
@@ -683,22 +703,22 @@
             const rawId = userTwitterId.replace(/^@/, '');
 
             if (userTwitterId === "") {
-                idWarning.textContent = "아이디를 입력해 주세요.";
-                idWarning.style.visibility = 'visible';
+                idWarningImg.src = 'id_warn_empty.png';
+                idWarningImg.style.visibility = 'visible';
                 inputId.focus();
                 return;
             }
 
             if (!userTwitterId.startsWith('@')) {
-                idWarning.textContent = "아이디는 '@아이디'형태로 입력해 주세요.";
-                idWarning.style.visibility = 'visible';
+                idWarningImg.src = 'id_warn_format.png';
+                idWarningImg.style.visibility = 'visible';
                 inputId.focus();
                 return;
             }
 
             if (rawId.length < 3) {
-                idWarning.textContent = "아이디를 입력해 주세요.";
-                idWarning.style.visibility = 'visible';
+                idWarningImg.src = 'id_warn_empty.png';
+                idWarningImg.style.visibility = 'visible';
                 inputId.focus();
                 return;
             }
@@ -714,12 +734,13 @@
             if (e.key === 'Enter') document.getElementById('btn-confirm-id').click();
         });
 
-        /* 과자 먹기 모션[cite: 5] */
+        /* 과자 먹기 모션 */
         function startEating(e) {
             if (!isGameRunning || isEating) return;
             if (e) e.preventDefault();
             
             isEating = true;
+            snackImg.style.display = 'block';
 
             if (doorState === 'open') {
                 triggerCaughtGameOver();
@@ -740,6 +761,8 @@
             if (e) e.preventDefault();
 
             isEating = false;
+            snackImg.style.display = 'none';
+            
             clearInterval(eatAnimInterval);
             minjaeChar.className = 'minjae-idle';
         }
@@ -748,7 +771,7 @@
         window.addEventListener('pointerup', stopEating);
         window.addEventListener('pointercancel', stopEating);
 
-        /* 게임 진행 및 차주한 등장 패턴[cite: 5] */
+        /* 게임 루프 */
         function startGame() {
             isGameRunning = true;
             isEating = false;
@@ -756,7 +779,10 @@
             doorState = 'closed';
             
             doorLayer.className = 'door-closed';
+            juhanChar.className = '';
             minjaeChar.className = 'minjae-idle';
+            snackImg.style.display = 'none';
+            
             scoreDisplay.textContent = '0';
 
             scoreInterval = setInterval(() => {
@@ -778,7 +804,8 @@
                 if (!isGameRunning) return;
 
                 doorState = 'open';
-                doorLayer.className = 'juhan-open';
+                doorLayer.className = 'door-open';
+                juhanChar.className = 'juhan-open';
 
                 if (isEating) {
                     triggerCaughtGameOver();
@@ -791,6 +818,7 @@
 
                     doorState = 'closed';
                     doorLayer.className = 'door-closed';
+                    juhanChar.className = ''; 
 
                     scheduleNextBossVisit();
                 }, stayDuration);
@@ -798,7 +826,7 @@
             }, waitTime);
         }
 
-        /* 검거 및 게임오버 전환[cite: 5] */
+        /* 검거 및 게임오버 순차 전환 */
         function triggerCaughtGameOver() {
             isGameRunning = false;
             clearInterval(scoreInterval);
@@ -806,16 +834,22 @@
             clearTimeout(bossCycleTimeout);
 
             minjaeChar.className = 'minjae-shock';
-            doorLayer.className = 'juhan-scold';
+            juhanChar.className = 'juhan-scold';
 
             setTimeout(() => {
                 gameoverId.textContent = userTwitterId;
                 gameoverScore.textContent = score;
-                screenGameOver.style.display = 'flex';
+                
+                gameoverContent.classList.remove('show');
+                screenGameOver.style.display = 'block';
+
+                setTimeout(() => {
+                    gameoverContent.classList.add('show');
+                }, 1000);
             }, 1000);
         }
 
-        // 트위터 공유[cite: 5]
+        // 트위터 공유 로직[cite: 7]
         document.getElementById('btn-share').addEventListener('click', () => {
             const shareText = `정도 웰컴 키트 :: 2027 강차 시즌그리팅\n과자 몰래먹기에서 ${score}점을 획득했습니다!\n아이디: ${userTwitterId}\n\n#정도_웰컴_키트 #2027_강차_시즌그리팅 #과자몰래먹기\n`;
             const currentUrl = window.location.origin + window.location.pathname + '?v=1';
