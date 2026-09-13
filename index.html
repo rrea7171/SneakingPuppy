@@ -10,11 +10,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <!-- DSEG 공식 CDN 스타일시트 로드 -->
+    <!-- DSEG 공식 CDN 스타일시트 로드[cite: 5] -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dseg@0.46.0/css/dseg.css">
 
     <style>
-        /* DSEG7 슬림한 Regular 폰트 정의 */
+        /* DSEG7 슬림한 Regular 폰트 정의[cite: 5] */
         @font-face {
             font-family: 'DSEG7-Classic';
             src: url('https://cdn.jsdelivr.net/npm/dseg@0.46.0/fonts/DSEG7-Classic/DSEG7Classic-Regular.woff2') format('woff2'),
@@ -30,7 +30,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* 🌟 모든 이미지의 기본 인라인 여백 및 틈새 제거 */
+        /* 🌟 모든 이미지의 기본 인라인 여백 및 틈새 제거[cite: 5] */
         img {
             display: block;
             vertical-align: top;
@@ -49,11 +49,10 @@
             overflow: hidden;
             user-select: none;
             -webkit-user-select: none;
-            /* 🌟 기본 커서 적용 */
             cursor: url('cursor_default.png') 0 0, auto;
         }
 
-        /* 🌟 1800x1080 고정 비율 래퍼 */
+        /* 🌟 1800x1080 고정 비율 래퍼[cite: 5] */
         #game-wrapper {
             position: relative;
             width: 1800px;
@@ -66,23 +65,38 @@
             cursor: url('cursor_default.png') 0 0, auto;
         }
 
-        /* 🌟 클릭 가능한 모든 요소에 손가락 커서 적용 */
+        /* 🌟 클릭 가능한 요소 손가락 커서[cite: 5] */
         button, 
         a, 
         .close-icon, 
-        .btn-main-dark, 
-        .btn-main-light,
+        .img-btn,
+        .btn-main-dark,
         .topbar-link,
         #screen-game {
             cursor: url('cursor_pointer.png') 4 0, pointer !important;
         }
 
-        /* 텍스트 입력창은 텍스트 커서 유지 */
+        /* 🌟 이미지 버튼 공통 효과 (클릭 시 쫀득한 눌림 효과) */
+        .img-btn {
+            user-select: none;
+            -webkit-user-drag: none;
+            transition: transform 0.08s ease;
+            filter: drop-shadow(0px 3px 5px rgba(0, 0, 0, 0.5)); /* 🌟 이미지 외곽선을 따라가는 그림자 추가 */
+            /* 0px: 그림자의 가로 위치 (양수면 오른쪽, 음수면 왼쪽)
+            3px: 그림자의 세로 위치 (양수면 아래, 음수면 위)
+            5px: 그림자의 번짐 정도 (숫자가 클수록 부드럽게 퍼짐)
+            0.5: 그림자의 진하기 (0.1 ~ 1.0 사이, 높을수록 진해짐) */
+        }
+
+        .img-btn:active {
+            transform: scale(0.96);
+        }
+
         #input-id {
             cursor: text !important;
         }
 
-        /* 🌟 상단바 (높이 84px) */
+        /* 🌟 상단바 (높이 84px)[cite: 5] */
         #top-bar {
             position: absolute;
             top: 0;
@@ -119,10 +133,10 @@
             -webkit-user-drag: none;
         }
 
-        /* 🌟 화면 공통 레이아웃 (1800 x 1080) */
+        /* 화면 레이아웃[cite: 5] */
         .screen {
             position: absolute;
-            top: 0px;
+            top: 0;
             left: 0;
             width: 1800px;
             height: 1080px;
@@ -130,26 +144,132 @@
         }
 
         /* =========================================
-           1. 대문 화면
+           1. 대문 화면 (1800x1080 1:1 고정)[cite: 5]
            ========================================= */
         #screen-start {
             display: flex;
             background-image: url('main_bg.png');
-            background-size: cover;
+            background-size: 100% 100%;
             background-position: center;
             justify-content: center;
             align-items: center;
         }
 
+        /* 🌟 이미지 버튼 배치 박스 */
         .main-menu-box {
             position: absolute;
-            bottom: 105px;
+            bottom: 160px; /* 포토샵 시안 종이 하단 위치에 맞춤 */
             left: 50%;
             transform: translateX(-50%);
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 10px;
             align-items: center;
+        }
+
+        /* =========================================
+           팝업 공통[cite: 5]
+           ========================================= */
+        .popup-overlay {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1800px;
+            height: 1080px;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(4px);
+            z-index: 150;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 🌟 1-1. 게임 설명 팝업 (이미지 전용 컨테이너) */
+        #popup-desc-container {
+            position: relative;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 80px;
+        }
+
+        #desc-popup-img {
+            max-width: 1300px;
+            height: auto;
+            user-select: none;
+            -webkit-user-drag: none;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+        }
+
+        /* 게임 설명 닫기 버튼 위치 (이미지 하단 중앙) */
+        #btn-close-desc {
+            position: absolute;
+            bottom: 45px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #btn-close-desc:active {
+            transform: translateX(-50%) scale(0.96);
+        }
+
+        /* 🌟 아이디 입력 팝업 박스 (이미지 배경 적용) */
+        #popup-id-card {
+            position: relative;
+            width: 900px;
+            height: auto;
+            background-image: url('id_popup_box.png'); /* 아이디 입력창 박스 이미지 */
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 50px 45px 50px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+        }
+
+        /* 1. 타이틀 이미지 크기 */
+        #id-title-img {
+            max-width: 260px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        /* 2. 안내 문구 이미지 크기 */
+        #id-instruction-img {
+            max-width: 600px;
+            height: auto;
+            margin-bottom: 25px;
+        }
+
+        /* 3. 아이디 입력창 테두리 박스 (가운데 정렬) */
+        .input-box-wrapper {
+            width: 680px;
+            border: 3px solid #b59b71;
+            border-radius: 0px; /* 박스 라운드 */
+            padding: 12px 25px;
+            margin-bottom: 18px;
+            background: #ffffff;
+        }
+
+        #input-id {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-family: 'Noto Serif KR', serif;
+            font-size: 34px;
+            text-align: center;
+            color: #242220;
+            background: transparent;
+        }
+
+        /* 4. 경고 문구 이미지 (공간을 유지한 채 숨겨둠) */
+        #id-warning-img {
+            height: 24px; /* 경고 이미지 높이에 맞게 조절 */
+            object-fit: contain;
+            margin-top: 7px;
+            margin-bottom: 18px;
+            visibility: hidden; /* 오류 전에는 공간만 차지하고 보이지 않음 */
         }
 
         .btn-main-dark {
@@ -167,26 +287,11 @@
             transition: transform 0.05s ease;
         }
 
-        .btn-main-light {
-            width: 310px;
-            height: 74px;
-            background: #ffffff;
-            border: 3px solid #b8a99a;
-            border-radius: 12px;
-            color: #2b2825;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-            transition: transform 0.05s ease;
-        }
-
-        .btn-main-dark:active, .btn-main-light:active {
+        .btn-main-dark:active {
             transform: scale(0.96);
         }
 
-        .btn-main-dark .btn-text, .btn-main-light .btn-text {
+        .btn-main-dark .btn-text {
             font-size: 27px;
             font-weight: 700;
             display: flex;
@@ -201,121 +306,8 @@
             margin-top: 2px;
         }
 
-        /* 팝업 공통 */
-        .popup-overlay {
-            display: none;
-            position: absolute;
-            top: 72px;
-            left: 0;
-            width: 1800px;
-            height: 1080px;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(4px);
-            z-index: 120;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .popup-card {
-            background: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.35);
-            border: 2px solid #d9d0c5;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* 게임 설명 팝업 */
-        #popup-desc .popup-card {
-            width: 1150px;
-            padding: 60px 70px 50px 70px;
-        }
-
-        .popup-title {
-            font-size: 48px;
-            font-weight: 700;
-            color: #1f1e1c;
-            margin-bottom: 35px;
-        }
-
-        .desc-columns {
-            display: flex;
-            width: 100%;
-            gap: 60px;
-            text-align: left;
-            margin-bottom: 40px;
-        }
-
-        .desc-col {
-            flex: 1;
-        }
-
-        .col-header {
-            font-size: 28px;
-            font-weight: 700;
-            border-bottom: 2px solid #c4b5a5;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            color: #2b2724;
-            text-align: center;
-        }
-
-        .desc-list {
-            font-size: 19px;
-            line-height: 1.8;
-            color: #44403c;
-            margin: 0;
-            padding-left: 25px;
-        }
-
-        .desc-list li {
-            margin-bottom: 8px;
-        }
-
-        .desc-sub {
-            color: #78716c;
-            font-size: 17px;
-            list-style: none;
-            margin-left: -15px;
-        }
-
-        /* 아이디 입력 팝업 */
-        #popup-id .popup-card {
-            width: 870px;
-            padding: 65px 55px 50px 55px;
-        }
-
-        .input-box-wrapper {
-            width: 100%;
-            border: 3px solid #bda891;
-            padding: 15px 30px;
-            margin: 20px 0 35px 0;
-            background: #fdfdfd;
-        }
-
-        #input-id {
-            width: 100%;
-            border: none;
-            outline: none;
-            font-family: 'Noto Serif KR', serif;
-            font-size: 38px;
-            text-align: center;
-            color: #242220;
-            background: transparent;
-        }
-
-        #id-warning {
-            color: #cc3333;
-            font-size: 20px;
-            margin-top: -20px;
-            margin-bottom: 20px;
-            visibility: hidden;
-        }
-
         /* =========================================
-           2. 게임 화면
+           2. 게임 화면[cite: 5]
            ========================================= */
         #screen-game {
             background-color: #d8cfc4;
@@ -333,7 +325,6 @@
             pointer-events: none;
         }
 
-        /* 문 & 차주한 레이어 */
         #door-layer {
             position: absolute;
             top: 30px;
@@ -350,7 +341,6 @@
         .juhan-open { background-image: url('juhan_open.png'); }
         .juhan-scold { background-image: url('juhan_scold.png'); }
 
-        /* 강민재 레이어 */
         #minjae-character {
             position: absolute;
             bottom: 0;
@@ -368,7 +358,6 @@
         .minjae-eat2 { background-image: url('minjae_eat2.png'); }
         .minjae-shock { background-image: url('minjae_shock.png'); }
 
-        /* 상단 스코어 보드 */
         #score-board-box {
             position: absolute;
             top: 35px;
@@ -401,7 +390,7 @@
         }
 
         /* =========================================
-           3. 게임 오버 화면 (전체 1800 x 1080 커버)
+           3. 게임 오버 화면[cite: 5]
            ========================================= */
         #screen-gameover {
             position: absolute;
@@ -467,7 +456,7 @@
 <body>
 
     <div id="game-wrapper">
-        <!-- 상단바 -->
+        <!-- 상단바[cite: 5] -->
         <div id="top-bar">
             <a href="https://x.com/1201x0617_SG" target="_blank" rel="noopener noreferrer" class="topbar-link">
                 <img src="topbar_title.png" id="topbar-title-img" alt="정도 웰컴 키트 :: 2027 강차 시즌그리팅">
@@ -477,70 +466,45 @@
             </a>
         </div>
 
-        <!-- 1. 대문 화면[cite: 3] -->
+        <!-- 1. 대문 화면 (이미지 버튼 2개 적용) -->
         <div id="screen-start" class="screen">
             <div class="main-menu-box">
-                <button id="btn-open-start-popup" class="btn-main-dark">
-                    <div class="btn-text">▶ 게임 시작</div>
-                    <div class="btn-subtext">GAME START</div>
-                </button>
-                <button id="btn-open-desc-popup" class="btn-main-light">
-                    <div class="btn-text">📖 게임 설명</div>
-                    <div class="btn-subtext">GAME DESCRIPTION</div>
-                </button>
+                <img src="btn_start.png" id="btn-open-start-popup" class="img-btn" alt="게임 시작">
+                <img src="btn_desc.png" id="btn-open-desc-popup" class="img-btn" alt="게임 설명">
             </div>
         </div>
 
-        <!-- 1-1. 게임 설명 팝업[cite: 3] -->
+        <!-- 1-1. 게임 설명 팝업 (이미지 및 닫기 버튼 이미지 적용) -->
         <div id="popup-desc" class="popup-overlay">
-            <div class="popup-card">
-                <div class="popup-title">게임 설명</div>
-                <div class="desc-columns">
-                    <div class="desc-col">
-                        <div class="col-header">게임 방법</div>
-                        <ol class="desc-list">
-                            <li>게임 시작 버튼을 누르고, 아이디를 입력한 후 게임을 시작한다.[cite: 3]</li>
-                            <li>화면을 꾹 누르면 (마우스로 클릭하면) 강민재가 과자를 먹는다.<br><span class="desc-sub">* 과자를 먹는 동안 점수가 오른다.</span>[cite: 3]</li>
-                            <li>차주한이 랜덤하게 문을 열고 들어온다.<br>
-                                <span class="desc-sub">* 차주한이 들어올 때, 강민재가 과자를 먹고 있으면 게임 아웃!</span><br>
-                                <span class="desc-sub">* 과자를 들키지 않았다면, 차주한이 문을 닫고 나간다.</span>[cite: 3]
-                            </li>
-                            <li>차주한에게 들키기 전까지 게임을 진행한다.[cite: 3]</li>
-                        </ol>
-                    </div>
-                    <div class="desc-col">
-                        <div class="col-header">이벤트 참여방법</div>
-                        <ol class="desc-list">
-                            <li>게임 오버 화면의 점수와 아이디가 나오게 캡처한다.[cite: 3]</li>
-                            <li>해시태그와 함께 트위터에 게시글을 올린다.<br><span class="desc-sub">(공유하기 버튼을 누르면 바로 트위터로 이동!)</span>[cite: 3]</li>
-                            <li>구글 폼을 작성한다.[cite: 3]</li>
-                            <li>참여상 윗치폼을 작성하고 배송비를 입금한다.[cite: 3]</li>
-                            <li>순위 결과를 기다린다.[cite: 3]</li>
-                        </ol>
-                    </div>
-                </div>
-                <button id="btn-close-desc" class="btn-main-dark" style="width:230px; height:65px;">
-                    <div class="btn-text" style="font-size:24px;">닫기</div>
-                </button>
+            <div id="popup-desc-container">
+                <img src="desc_popup.png" id="desc-popup-img" alt="게임 설명">
+                <img src="btn_close.png" id="btn-close-desc" class="img-btn" alt="닫기">
             </div>
         </div>
 
-        <!-- 1-2. 아이디 입력 팝업[cite: 3] -->
+        <!-- 1-2. 아이디 입력 팝업 -->
         <div id="popup-id" class="popup-overlay">
-            <div class="popup-card">
-                <div class="popup-title">아이디 입력</div>
+            <div class="popup-card" id="popup-id-card">
+                <!-- 1. '아이디 입력' 타이틀 이미지 -->
+                <img src="id_title.png" id="id-title-img" alt="아이디 입력">
+
+                <!-- 2. 안내 문구 이미지 -->
+                <img src="id_instruction.png" id="id-instruction-img" alt="트위터 아이디 안내 문구">
+
+                <!-- 3. 실제 타이핑하는 아이디 입력칸 -->
                 <div class="input-box-wrapper">
                     <input type="text" id="input-id" placeholder="@아이디" autocomplete="off" spellcheck="false">
                 </div>
-                <div id="id-warning">아이디를 입력해 주세요.</div>
-                <button id="btn-confirm-id" class="btn-main-dark">
-                    <div class="btn-text">▶ 게임 시작</div>
-                    <div class="btn-subtext">GAME START</div>
-                </button>
+
+                <!-- 4. 경고 문구 이미지 (경고1, 경고2가 상황에 맞춰 교체됨) -->
+                <img src="id_warn_empty.png" id="id-warning-img" alt="경고 문구">
+
+                <!-- 5. 게임 시작 버튼 이미지 (대문과 동일) -->
+                <img src="btn_start.png" id="btn-confirm-id" class="img-btn" alt="게임 시작">
             </div>
         </div>
 
-        <!-- 2. 게임 플레이 화면[cite: 3] -->
+        <!-- 2. 게임 플레이 화면[cite: 5] -->
         <div id="screen-game" class="screen">
             <div id="game-bg-layer"></div>
             
@@ -553,7 +517,7 @@
             </div>
         </div>
 
-        <!-- 3. 게임 오버 화면 -->
+        <!-- 3. 게임 오버 화면[cite: 5] -->
         <div id="screen-gameover">
             <h1 id="gameover-title">GAME OVER</h1>
             <div id="gameover-id">@아이디</div>
@@ -577,7 +541,7 @@
     </div>
 
     <script>
-        /* 🌟 1800x1080 비율 자동 스케일 계산 */
+        /* 1800x1080 비율 자동 스케일[cite: 5] */
         function resizeGame() {
             const wrapper = document.getElementById('game-wrapper');
             const scale = Math.min(window.innerWidth / 1800, window.innerHeight / 1080);
@@ -586,8 +550,17 @@
         window.addEventListener('resize', resizeGame);
         resizeGame();
 
-        /* 🌟 게임 내 모든 일러스트 사전 로딩 (첫 등장 시 깜빡임 방지) */
+        /* 🌟 전체 이미지 사전 로딩 (버튼 및 설명 팝업 포함) */
         const preloadImageSources = [
+            'btn_start.png',
+            'btn_desc.png',
+            'desc_popup.png',
+            'btn_close.png',
+            'id_popup_box.png',
+            'id_title.png',
+            'id_instruction.png',
+            'id_warn_empty.png',
+            'id_warn_format.png',
             'door_closed.png',
             'juhan_open.png',
             'juhan_scold.png',
@@ -610,7 +583,59 @@
         const popupDesc = document.getElementById('popup-desc');
         const popupId = document.getElementById('popup-id');
         const inputId = document.getElementById('input-id');
-        const idWarning = document.getElementById('id-warning');
+        
+        // 🌟 경고 이미지 요소 선택
+        const idWarningImg = document.getElementById('id-warning-img');
+
+        // 실시간 입력 시 경고 숨김
+        inputId.addEventListener('input', (e) => {
+            let val = e.target.value.replace(/[^@a-zA-Z0-9_]/g, '');
+            let atCount = 0;
+            val = val.replace(/@/g, () => (++atCount === 1 ? '@' : ''));
+            if (val.length > 20) val = val.slice(0, 20);
+            e.target.value = val;
+            
+            if (val.length > 0) {
+                idWarningImg.style.visibility = 'hidden';
+            }
+        });
+
+        // '게임 시작' 버튼 클릭 검증 로직
+        document.getElementById('btn-confirm-id').addEventListener('click', () => {
+            userTwitterId = inputId.value.trim();
+            const rawId = userTwitterId.replace(/^@/, '');
+
+            // 🚨 1. 빈칸인 경우 -> 경고문구 1 표시
+            if (userTwitterId === "") {
+                idWarningImg.src = 'id_warn_empty.png';
+                idWarningImg.style.visibility = 'visible';
+                inputId.focus();
+                return;
+            }
+
+            // 🚨 2. @로 시작하지 않는 경우 -> 경고문구 2 표시
+            if (!userTwitterId.startsWith('@')) {
+                idWarningImg.src = 'id_warn_format.png';
+                idWarningImg.style.visibility = 'visible';
+                inputId.focus();
+                return;
+            }
+
+            // 🚨 3. @만 있거나 아이디가 3글자 미만인 경우 -> 경고문구 1 표시
+            if (rawId.length < 3) {
+                idWarningImg.src = 'id_warn_empty.png';
+                idWarningImg.style.visibility = 'visible';
+                inputId.focus();
+                return;
+            }
+
+            // 정상 통과 시 게임 화면 진입
+            popupId.style.display = 'none';
+            screenStart.style.display = 'none';
+            screenGame.style.display = 'block';
+
+            startGame();
+        });
 
         const doorLayer = document.getElementById('door-layer');
         const minjaeChar = document.getElementById('minjae-character');
@@ -630,7 +655,7 @@
         let doorState = 'closed';
         let eatFrame = 1;
 
-        // 팝업 제어[cite: 3]
+        // 설명 팝업 열기 / 닫기
         document.getElementById('btn-open-desc-popup').addEventListener('click', () => {
             popupDesc.style.display = 'flex';
         });
@@ -638,6 +663,7 @@
             popupDesc.style.display = 'none';
         });
 
+        // 아이디 팝업 열기[cite: 5]
         document.getElementById('btn-open-start-popup').addEventListener('click', () => {
             popupId.style.display = 'flex';
             inputId.focus();
@@ -688,7 +714,7 @@
             if (e.key === 'Enter') document.getElementById('btn-confirm-id').click();
         });
 
-        /* 과자 먹기 모션 */
+        /* 과자 먹기 모션[cite: 5] */
         function startEating(e) {
             if (!isGameRunning || isEating) return;
             if (e) e.preventDefault();
@@ -722,7 +748,7 @@
         window.addEventListener('pointerup', stopEating);
         window.addEventListener('pointercancel', stopEating);
 
-        /* 게임 진행 및 차주한 등장 패턴 */
+        /* 게임 진행 및 차주한 등장 패턴[cite: 5] */
         function startGame() {
             isGameRunning = true;
             isEating = false;
@@ -772,7 +798,7 @@
             }, waitTime);
         }
 
-        /* 검거 및 게임오버 전환 */
+        /* 검거 및 게임오버 전환[cite: 5] */
         function triggerCaughtGameOver() {
             isGameRunning = false;
             clearInterval(scoreInterval);
@@ -789,7 +815,7 @@
             }, 1000);
         }
 
-        // 트위터 공유[cite: 3]
+        // 트위터 공유[cite: 5]
         document.getElementById('btn-share').addEventListener('click', () => {
             const shareText = `정도 웰컴 키트 :: 2027 강차 시즌그리팅\n과자 몰래먹기에서 ${score}점을 획득했습니다!\n아이디: ${userTwitterId}\n\n#정도_웰컴_키트 #2027_강차_시즌그리팅 #과자몰래먹기\n`;
             const currentUrl = window.location.origin + window.location.pathname + '?v=1';
