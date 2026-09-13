@@ -862,12 +862,12 @@
             }, 1000);
         }
 
-        /* 🌟 트위터 공유 (?v=1 제거) */
+        /* 🌟 트위터 공유 (링크 앞 띄어쓰기 제거) */
         document.getElementById('btn-share').addEventListener('click', () => {
-            const shareText = `#방금바삭소리누굽니까_저는아니에요\n#바삭강민재_빠직차주한\n`;
-            // 🌟 ?v=1을 제거하고 순수 URL만 추출
             const currentUrl = window.location.origin + window.location.pathname;
-            const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(currentUrl)}`;
+            // text 안에 링크를 직접 결합하여 트위터의 자동 띄어쓰기 방지
+            const shareText = `#방금바삭소리누굽니까_저는아니에요\n#바삭강민재_빠직차주한\n${currentUrl}`;
+            const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
             window.open(twitterUrl, '_blank');
         });
 
