@@ -4,34 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>과자 몰래먹기 :: 2027 강차 시즌그리팅</title>
-    
-    <!-- 🌟 실제 배포된 풀 주소(https://...)로 작성해야 트위터 카드가 정상 작동합니다 -->
+
     <meta property="og:type" content="website">
     <meta property="og:title" content="과자 몰래먹기 :: 2027 강차 시즌그리팅">
     <meta property="og:description" content="변호사님 모르게 과자를 먹어보자!">
-    <meta property="og:image" content="https://sneakingpuppytest.vercel.app/preview.png">
+    <meta property="og:image" content="https://sneakingpuppygame.vercel.app/preview.png">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="과자 몰래먹기 :: 2027 강차 시즌그리팅">
     <meta name="twitter:description" content="변호사님 모르게 과자를 먹어보자!">
-    <meta name="twitter:image" content="https://sneakingpuppytest.vercel.app/preview.png">
+    <meta name="twitter:image" content="https://sneakingpuppygame.vercel.app/preview.png">
 
-    <!-- 🌟 브라우저 탭 아이콘 (파비콘) -->
     <link rel="icon" type="image/png" href="favicon.png">
-    
-    <!-- (선택) 스마트폰 홈 화면 바로가기용 아이콘 -->
     <link rel="apple-touch-icon" href="favicon.png">
 
-    <!-- 폰트 로드: Noto Serif KR (본명조), Cinzel (영문 타이틀)[cite: 3] -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- DSEG 공식 CDN 스타일시트 로드[cite: 5] -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dseg@0.46.0/css/dseg.css">
 
     <style>
-        /* DSEG7 슬림한 Regular 폰트 정의[cite: 5] */
         @font-face {
             font-family: 'DSEG7-Classic';
             src: url('https://cdn.jsdelivr.net/npm/dseg@0.46.0/fonts/DSEG7-Classic/DSEG7Classic-Regular.woff2') format('woff2'),
@@ -47,7 +39,6 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* 🌟 모든 이미지의 기본 인라인 여백 및 틈새 제거[cite: 5] */
         img {
             display: block;
             vertical-align: top;
@@ -69,7 +60,6 @@
             cursor: url('cursor_default.png') 0 0, auto;
         }
 
-        /* 🌟 1800x1080 고정 비율 래퍼[cite: 5] */
         #game-wrapper {
             position: relative;
             width: 1800px;
@@ -82,7 +72,6 @@
             cursor: url('cursor_default.png') 0 0, auto;
         }
 
-        /* 🌟 클릭 가능한 요소 손가락 커서[cite: 5] */
         button, 
         a, 
         .close-icon, 
@@ -93,7 +82,6 @@
             cursor: url('cursor_pointer.png') 4 0, pointer !important;
         }
 
-        /* 🌟 이미지 버튼 공통 효과 (클릭 시 쫀득한 눌림 효과)[cite: 7] */
         .img-btn {
             user-select: none;
             -webkit-user-drag: none;
@@ -109,7 +97,6 @@
             cursor: text !important;
         }
 
-        /* 🌟 상단바 (높이 84px)[cite: 5] */
         #top-bar {
             position: absolute;
             top: 0;
@@ -146,7 +133,6 @@
             -webkit-user-drag: none;
         }
 
-        /* 화면 레이아웃[cite: 5] */
         .screen {
             position: absolute;
             top: 0;
@@ -156,9 +142,6 @@
             display: none;
         }
 
-        /* =========================================
-           1. 대문 화면 (1800x1080 1:1 고정)[cite: 5]
-           ========================================= */
         #screen-start {
             display: flex;
             background-image: url('main_bg.png');
@@ -179,9 +162,6 @@
             align-items: center;
         }
 
-        /* =========================================
-           팝업 공통[cite: 5]
-           ========================================= */
         .popup-overlay {
             display: none;
             position: absolute;
@@ -196,7 +176,6 @@
             align-items: center;
         }
 
-        /* 1-1. 게임 설명 팝업[cite: 6] */
         #popup-desc-container {
             position: relative;
             display: inline-flex;
@@ -224,7 +203,6 @@
             transform: translateX(-50%) scale(0.96);
         }
 
-        /* 1-2. 아이디 입력 팝업 박스[cite: 6] */
         #popup-id-card {
             position: relative;
             width: 900px;
@@ -279,9 +257,6 @@
             visibility: hidden;
         }
 
-        /* =========================================
-           2. 게임 화면
-           ========================================= */
         #screen-game {
             background-color: #dcd0be;
             position: relative;
@@ -301,7 +276,6 @@
             overflow: hidden;
         }
 
-        /* 문 레이어[cite: 6] */
         #door-layer {
             position: absolute;
             top: 0;
@@ -324,7 +298,6 @@
             height: 668px;
         }
 
-        /* 차주한 레이어[cite: 6] */
         #juhan-character {
             position: absolute;
             pointer-events: none;
@@ -351,7 +324,6 @@
             height: 639px;
         }
 
-        /* 강민재 레이어[cite: 6] */
         #minjae-character {
             position: absolute;
             bottom: 0;
@@ -369,7 +341,6 @@
         .minjae-eat2 { background-image: url('minjae_eat2.png'); }
         .minjae-shock { background-image: url('minjae_shock.png'); }
 
-        /* 탁자 위 과자[cite: 6] */
         #snack-on-table {
             position: absolute;
             top: 631px;
@@ -384,7 +355,6 @@
             display: none;
         }
 
-        /* 상단 스코어 보드[cite: 7] */
         #score-board-box {
             position: absolute;
             top: 15px;
@@ -423,9 +393,6 @@
             line-height: 1;
         }
 
-        /* =========================================
-           3. 게임 오버 화면[cite: 7]
-           ========================================= */
         #screen-gameover {
             position: absolute;
             top: 0;
@@ -448,7 +415,7 @@
             align-items: center;
             justify-content: center;
             opacity: 0;
-            transition: opacity 0.5s ease-in-out; /* 🌟 페이드인 속도를 기존보다 빠르게 최적화 */
+            transition: opacity 0.5s ease-in-out;
             pointer-events: none;
         }
 
@@ -503,7 +470,6 @@
             align-items: center;
         }
 
-        /* 이미지 깜빡임 방지용 비가시 렌더 컨테이너 */
         #preload-cache-box {
             position: absolute;
             top: 0;
@@ -520,7 +486,6 @@
 <body>
 
     <div id="game-wrapper">
-        <!-- 상단바[cite: 6] -->
         <div id="top-bar">
             <a href="https://x.com/1201x0617_SG" target="_blank" rel="noopener noreferrer" class="topbar-link">
                 <img src="topbar_title.png" id="topbar-title-img" alt="정도 웰컴 키트 :: 2027 강차 시즌그리팅">
@@ -530,7 +495,6 @@
             </a>
         </div>
 
-        <!-- 1. 대문 화면[cite: 6] -->
         <div id="screen-start" class="screen">
             <div class="main-menu-box">
                 <img src="btn_start.png" id="btn-open-start-popup" class="img-btn" alt="게임 시작">
@@ -538,7 +502,6 @@
             </div>
         </div>
 
-        <!-- 1-1. 게임 설명 팝업[cite: 6] -->
         <div id="popup-desc" class="popup-overlay">
             <div id="popup-desc-container">
                 <img src="desc_popup.png" id="desc-popup-img" alt="게임 설명">
@@ -546,7 +509,6 @@
             </div>
         </div>
 
-        <!-- 1-2. 아이디 입력 팝업[cite: 6] -->
         <div id="popup-id" class="popup-overlay">
             <div class="popup-card" id="popup-id-card">
                 <img src="id_title.png" id="id-title-img" alt="아이디 입력">
@@ -561,7 +523,6 @@
             </div>
         </div>
 
-        <!-- 2. 게임 플레이 화면 -->
         <div id="screen-game" class="screen">
             <div id="game-play-area">
                 <div id="door-layer" class="door-closed"></div>
@@ -577,7 +538,6 @@
             </div>
         </div>
 
-        <!-- 3. 게임 오버 화면[cite: 7] -->
         <div id="screen-gameover">
             <div id="gameover-content">
                 <img src="gameover_title.png" id="gameover-title-img" alt="GAME OVER">
@@ -595,7 +555,6 @@
             </div>
         </div>
 
-        <!-- 브라우저 메모리 프리렌더링 히든 박스 -->
         <div id="preload-cache-box">
             <div class="door-open"></div>
             <div class="juhan-open"></div>
@@ -617,7 +576,6 @@
         window.addEventListener('resize', resizeGame);
         resizeGame();
 
-        /* 고속 비동기 디코딩 적용 */
         const preloadImageSources = [
             'preview.png',
             'topbar_bg.png',
@@ -690,7 +648,6 @@
         let doorState = 'closed';
         let eatFrame = 1;
 
-        // 팝업 제어
         document.getElementById('btn-open-desc-popup').addEventListener('click', () => {
             popupDesc.style.display = 'flex';
         });
@@ -751,7 +708,6 @@
             if (e.key === 'Enter') document.getElementById('btn-confirm-id').click();
         });
 
-        /* 과자 먹기 모션 */
         function startEating(e) {
             if (!isGameRunning || isEating) return;
             if (e) e.preventDefault();
@@ -788,7 +744,6 @@
         window.addEventListener('pointerup', stopEating);
         window.addEventListener('pointercancel', stopEating);
 
-        /* 게임 루프 */
         function startGame() {
             isGameRunning = true;
             isEating = false;
@@ -843,7 +798,6 @@
             }, waitTime);
         }
 
-        /* 🌟 검거 및 게임오버 전환 (얼빡 노출 후 0.4초 뒤 UI 페이드인) */
         function triggerCaughtGameOver() {
             isGameRunning = false;
             clearInterval(scoreInterval);
@@ -853,7 +807,6 @@
             minjaeChar.className = 'minjae-shock';
             juhanChar.className = 'juhan-scold';
 
-            // 1초간 혼나는 모션 후 얼빡 화면 표시
             setTimeout(() => {
                 gameoverId.textContent = userTwitterId;
                 gameoverScore.textContent = score;
@@ -861,17 +814,14 @@
                 gameoverContent.classList.remove('show');
                 screenGameOver.style.display = 'block';
 
-                // 🌟 얼빡 노출 후 대기 시간을 0.4초(400ms)로 단축하여 빠르게 전환
                 setTimeout(() => {
                     gameoverContent.classList.add('show');
                 }, 400);
             }, 1000);
         }
 
-        /* 🌟 트위터 공유 (링크 앞 띄어쓰기 제거) */
         document.getElementById('btn-share').addEventListener('click', () => {
             const currentUrl = window.location.origin + window.location.pathname;
-            // text 안에 링크를 직접 결합하여 트위터의 자동 띄어쓰기 방지
             const shareText = `#방금바삭소리누굽니까_저는아니에요\n#바삭강민재_빠직차주한\n${currentUrl}`;
             const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
             window.open(twitterUrl, '_blank');
