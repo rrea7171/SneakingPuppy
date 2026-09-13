@@ -5,17 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>과자 몰래먹기 :: 2027 강차 시즌그리팅</title>
     
-    <!-- 🌟 Open Graph (카카오톡, 페이스북, 디스코드 링크 미리보기) -->
+    <!-- 🌟 실제 배포된 풀 주소(https://...)로 작성해야 트위터 카드가 정상 작동합니다 -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="과자 몰래먹기 :: 2027 강차 시즌그리팅">
     <meta property="og:description" content="변호사님 모르게 과자를 먹어보자!">
-    <meta property="og:image" content="preview.png">
+    <meta property="og:image" content="https://sneakingpuppytest.vercel.app/preview.png">
 
-    <!-- 🌟 Twitter Card (트위터 링크 미리보기) -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="과자 몰래먹기 :: 2027 강차 시즌그리팅">
     <meta name="twitter:description" content="변호사님 모르게 과자를 먹어보자!">
-    <meta name="twitter:image" content="preview.png">
+    <meta name="twitter:image" content="https://sneakingpuppytest.vercel.app/preview.png">
 
     <!-- 폰트 로드: Noto Serif KR (본명조), Cinzel (영문 타이틀)[cite: 3] -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -863,10 +862,11 @@
             }, 1000);
         }
 
-        /* 🌟 트위터 공유 (요청된 3줄 규격 적용) */
+        /* 🌟 트위터 공유 (?v=1 제거) */
         document.getElementById('btn-share').addEventListener('click', () => {
             const shareText = `#방금바삭소리누굽니까_저는아니에요\n#바삭강민재_빠직차주한\n`;
-            const currentUrl = window.location.origin + window.location.pathname + '?v=1';
+            // 🌟 ?v=1을 제거하고 순수 URL만 추출
+            const currentUrl = window.location.origin + window.location.pathname;
             const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(currentUrl)}`;
             window.open(twitterUrl, '_blank');
         });
